@@ -5,7 +5,7 @@ Ahyun Seo, Byungjin Kim, Suha Kwak, Minsu Cho
 </p>
 
 <p align="center">
-    <a href="https://arxiv.org/abs/.">[paper]</a>
+    <a href="https://arxiv.org/abs/2203.16787">[paper]</a>
     <a href="http://cvlab.postech.ac.kr/research/EquiSym">[project page]</a>
 </p>
 
