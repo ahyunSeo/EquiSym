@@ -138,6 +138,7 @@ class SymmetryDetectionNetwork(nn.Module):
 
         if self.get_theta:
             ### [Step 3b]: classification loss
+            a_lbl = F.max_pool2d(a_lbl, kernel_size=5, stride=1, padding=2)
             theta_out = F.interpolate(theta_out, size=a_lbl.size()[2:], mode='bilinear', align_corners=True)
 
             weight = torch.ones(theta_out.shape[1])

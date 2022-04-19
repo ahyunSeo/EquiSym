@@ -305,7 +305,8 @@ class NewSymmetryDatasetsBase(Dataset):
         ellipse_a_lbl = ellipse_a_lbl.permute(2, 0, 1).unsqueeze(0)
         a_lbl = torch.where(axis_lbl > 0, \
                             a_lbl, ellipse_a_lbl)
-        a_lbl = F.max_pool2d(a_lbl, kernel_size=5, stride=1, padding=2)
+        ### move max_pool to model (GPU, ver.) for training
+        # a_lbl = F.max_pool2d(a_lbl, kernel_size=5, stride=1, padding=2)
         a_lbl = F.interpolate(a_lbl, (im_h, im_w), mode='nearest')
         return a_lbl
 
@@ -313,7 +314,8 @@ class NewSymmetryDatasetsBase(Dataset):
         # a_lbl (order list index 0~N), out of bound -> 1 
         # draw_points conver 0 -> 255
         a_lbl = a_lbl.unsqueeze(0).unsqueeze(1)
-        a_lbl = F.max_pool2d(a_lbl, kernel_size=5, stride=1, padding=2).squeeze(1).squeeze(0)
+        ### move max_pool to model (GPU, ver.) for training
+        # a_lbl = F.max_pool2d(a_lbl, kernel_size=5, stride=1, padding=2).squeeze(1).squeeze(0)
         fg_mask = (a_lbl > 0).float()
         # a_lbl (255->0, 1, 2, ..., N-1)
         a_lbl = (a_lbl != 255).float() * a_lbl
