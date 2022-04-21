@@ -17,7 +17,7 @@ Official PyTorch implementation of *Reflection and Rotation Detection via Equiva
     conda activate EquiSym
     conda install pytorch==1.7.0 torchvision==0.8.1 cudatoolkit=11.0 -c pytorch
     conda install -c conda-forge matplotlib
-    pip install albumentations tqdm scikit-image opencv-python
+    pip install albumentations=0.5.2 shapely opencv-python tqdm
     
     mkdir weights wandb sym_datasets
 
