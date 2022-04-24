@@ -281,12 +281,9 @@ class NewSymmetryDatasetsBase(Dataset):
             ### output axis (0 or 1) # angle label (H, W, nangle) sum 1
             axis_coords = np.array(axis_coords[:num_lines])
             ### y in image coordinate is different from the world coord
-            if axis_coords[:, 2] == axis_coords[:, 0]:
-                theta = 90
-            else:
-                tangents = -(axis_coords[:, 3] - axis_coords[:, 1]) / (axis_coords[:, 2] - axis_coords[:, 0]) 
-                theta = np.arctan(tangents)
-                theta = theta * 180 / np.pi
+            theta = np.where(axis_coords[:, 2] == axis_coords[:, 0], 90, \
+                            np.arctan(-(axis_coords[:, 3] - axis_coords[:, 1]) / (axis_coords[:, 2] - axis_coords[:, 0])) \
+                                * 180 / np.pi )
             # kernel theta interval
             d = self.angle_interval / 2
             k = theta // d
