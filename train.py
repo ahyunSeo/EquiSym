@@ -124,7 +124,7 @@ def test(net, args, test_loaders, device, mode='test', sym_type='reflection'):
     with torch.no_grad():
         for i, test_loader in enumerate(test_loaders):
             
-            axis_eval = PointEvaluation(n_thresh, blur_pred=True)
+            axis_eval = PointEvaluation(n_thresh, blur_pred=True, device=device)
             val_log_images = []
 
             for idx, data in enumerate(tqdm(test_loader)):

@@ -50,15 +50,15 @@ Official PyTorch implementation of *Reflection and Rotation Detection via Equiva
 - visualize results using the input images in ./imgs
 
 ```
-    python demo.py --ver equiv_aux_ref -rot 0 -eq 
-    python demo.py --ver equiv_aux_rot -rot 1 -eq 
+    python demo.py --ver equiv_aux_ref -rot 0 -eq --get_theta 10  
+    python demo.py --ver equiv_aux_rot -rot 1 -eq --get_theta 10 
 ```
 
 - test with pretrained weights
 
 ```
-    python train.py --ver equiv_aux_ref -t -rot 0 -eq -wf
-    python train.py --ver equiv_aux_rot -t -rot 1 -eq -wf 
+    python train.py --ver equiv_aux_ref -t -rot 0 -eq -wf --get_theta 10 
+    python train.py --ver equiv_aux_rot -t -rot 1 -eq -wf --get_theta 10 
 ```
 
 - vis(test) with pretrained weights of vanilla CNN model

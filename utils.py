@@ -109,12 +109,15 @@ def adjust_learning_rate(optimizer, epoch):
 ##########################
 
 class PointEvaluation(object):
-    def __init__(self, n_thresh=100, max_dist=5, blur_pred=False):
+    def __init__(self, n_thresh=100, max_dist=5, blur_pred=False, device=None):
         self.n_thresh = n_thresh
         self.max_dist = max_dist
         self.thresholds = torch.linspace(1.0 / (n_thresh + 1),
                             1.0 - 1.0 / (n_thresh + 1), n_thresh)
-        self.filters = self.make_gt_filter(max_dist)
+        if device is not None:
+            self.filters = self.make_gt_filter(max_dist).to(device)
+        else:
+            self.filters = self.make_gt_filter(max_dist)
         self.tp = torch.zeros((n_thresh,))
         self.pos_label = torch.zeros((n_thresh,))
         self.pos_pred = torch.zeros((n_thresh,))
@@ -142,10 +145,11 @@ class PointEvaluation(object):
         return precision, recall, f1
         
     def __call__ (self, pred, gt):
-        pred = pred.cpu()
+        pred = pred.detach()
+        gt = gt.to(pred.device)
         gt = F.conv2d(gt, self.filters, padding=self.max_dist)
         gt = (gt > 0).float()
-        pos_label = gt.float().sum(dim=(2, 3))
+        pos_label = gt.float().sum(dim=(2, 3)).cpu()
         self.num_samples = self.num_samples + pred.shape[0]
         # Evaluate predictions (B, 1, H, W)
         for idx, th in enumerate(self.thresholds):
@@ -156,9 +160,10 @@ class PointEvaluation(object):
                 _pred = (_pred > 0).float()
 
             tp = ((gt * _pred) > 0).float().sum(dim=(2, 3))
-            pos_pred = _pred.sum(dim=(2, 3))
+            pos_pred = _pred.sum(dim=(2, 3)).cpu()
             
-            self.tp[idx] += tp.sum()
+            self.tp[idx] += tp.sum().cpu()
             self.pos_pred[idx] += pos_pred.sum()
             self.pos_label[idx] += pos_label.sum()
 
+            
