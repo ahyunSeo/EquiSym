@@ -132,8 +132,9 @@ def test(net, args, test_loaders, device, mode='test', sym_type='reflection'):
                     img, mask, axis, axis_gs, is_syn, a_lbl = data
                     a_lbl.to(device)
                 else:
-                    img, mask, axis, axis_gs, is_syn, _ = data
-                    a_lbl = None
+                    img, mask, axis, axis_gs, is_syn, a_lbl = data
+                    # a_lbl = None
+                    a_lbl = a_lbl.to(device)
                 _mask = (mask > 0).float().to(device)
 
                 axis_out, mask_out, total_loss, losses = net(img=img.to(device), lbl=axis_gs.float().to(device), mask=_mask, is_syn = is_syn, a_lbl=a_lbl, sym_type=sym_type)
@@ -248,7 +249,7 @@ if __name__ == '__main__':
 
     trainset = NewSymmetryDatasets(sym_type=sym_type, split='train', input_size=[args.input_size, args.input_size], get_theta=args.get_theta, with_ref_circle=True, t_resize=False)
     valset = NewSymmetryDatasets(sym_type=sym_type, split='val', input_size=[args.input_size, args.input_size], get_theta=args.get_theta, with_ref_circle=True, t_resize=False)
-    testset = NewSymmetryDatasets(sym_type=sym_type, split='test', input_size=[args.input_size, args.input_size], get_theta=args.get_theta, with_ref_circle=True, t_resize=False)
+    testset = NewSymmetryDatasets(sym_type=sym_type, split='test', input_size=[args.input_size, args.input_size], get_theta=1, with_ref_circle=True, t_resize=False)
     train_loader = data.DataLoader(trainset, batch_size=args.bs_train, shuffle=True, num_workers=4, drop_last=True)
     val_loader = data.DataLoader(valset, batch_size=1, shuffle=False, num_workers=4)
     test_loader = data.DataLoader(testset, batch_size=1, shuffle=False, num_workers=4)

@@ -310,14 +310,16 @@ class NewSymmetryDatasetsBase(Dataset):
     def process_theta_rot(self, a_lbl):
         # a_lbl (order list index 0~N), out of bound -> 1 
         # draw_points conver 0 -> 255
-        a_lbl = a_lbl.unsqueeze(0).unsqueeze(1)
+        a_lbl = a_lbl.unsqueeze(0)
         ### move max_pool to model (GPU, ver.) for training
         # a_lbl = F.max_pool2d(a_lbl, kernel_size=5, stride=1, padding=2).squeeze(1).squeeze(0)
         fg_mask = (a_lbl > 0).float()
         # a_lbl (255->0, 1, 2, ..., N-1)
         a_lbl = (a_lbl != 255).float() * a_lbl
         # a_lbl ((0, 255)->1, 1->2, 2, ..., N-1) * fg_mask (discard 0)
-        a_lbl = F.one_hot(a_lbl.long()+1, num_classes=self.n_classes).permute(2, 0, 1) * fg_mask
+        # print('s, ', a_lbl.shape, self.n_classes, fg_mask.shape, F.one_hot(a_lbl.long()+1, num_classes=self.n_classes).shape)
+        a_lbl = F.one_hot(a_lbl.long()+1, num_classes=self.n_classes).squeeze(0).permute(2, 0, 1) * fg_mask
+        # a_lbl = F.one_hot(a_lbl.long()+1, num_classes=self.n_classes).permute(2, 0, 1) * fg_mask
         # initial a_lbl (BG, 1, 2, ..., N-1, 255) (255 for order 0)
         # a_lbl (255->0, 1, 2, ..., N-1) * BG_mask
         # angle (0, 1, 2, ...., N-1) one_hot, zero at BG pixels
