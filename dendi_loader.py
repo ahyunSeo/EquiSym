@@ -288,8 +288,8 @@ class NewSymmetryDatasetsBase(Dataset):
             d = self.angle_interval / 2
             k = theta // d
             a = k + 1 - theta / d
-            # indices1, indices2 = (k + 3) % self.n_theta, (k + 4) % self.n_theta
-            indices1, indices2 = (k) % self.n_theta, (k + 1) % self.n_theta
+            indices1, indices2 = (k + 3) % self.n_theta, (k + 4) % self.n_theta
+            # indices1, indices2 = (k) % self.n_theta, (k + 1) % self.n_theta
             # a_lbl [dummy 0, kernel1, kernel2, ...]
             a_lbl = np.zeros((theta.shape[0] + 1, self.n_theta), dtype=np.float32)
             a_lbl[np.arange(theta.shape[0]) + 1, indices1.astype(np.uint8)] = a
