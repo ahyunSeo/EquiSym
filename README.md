@@ -24,8 +24,8 @@ Official PyTorch implementation of *Reflection and Rotation Detection via Equiva
 ```
 
 ### Datasets and weights
-- download DENDI [onedrive](https://postechackr-my.sharepoint.com/:u:/g/personal/lastborn94_postech_ac_kr/ES2ftVVmTc5Du78EBgfTGy8BwygV_HRa5nWciYeq3cTvoQ?e=y9ETja) or [DENDI](https://github.com/ahyunSeo/DENDI)
-- trained [weights](https://postechackr-my.sharepoint.com/:u:/g/personal/lastborn94_postech_ac_kr/EbHHT8lIPThPhYcjU2dLbucBT6jfcNDilC7UXjlSDGKXtA?e=FxdyYk): EquiSym(ours), EquiSym(CNN ver.), pre-trained ReResNet50(D8)
+- download [DENDI](https://drive.google.com/file/d/1hVi9PwfgBQHRRSxQw024nd40LHH2uNHo/view?usp=sharing)
+- trained [weights](https://drive.google.com/file/d/11joVCtczmJL1cQAsakD6zpiRYwwP_to5/view?usp=sharing): EquiSym(ours), EquiSym(CNN ver.), pre-trained ReResNet50(D8)
 
 ```
 .
